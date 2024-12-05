@@ -1,0 +1,37 @@
+class Solution {
+public:
+    typedef pair<int,char> pi;
+    string reorganizeString(string s) {
+        unordered_map<char,int>mp;
+        priority_queue<pi>pq;
+        for(auto x:s){
+            mp[x]++;
+        }
+        for(auto x : mp){
+            pq.push({x.second,x.first});
+        }
+        string ans = "";
+        while(pq.size()>1){
+            auto one = pq.top(); pq.pop();
+            auto sec = pq.top(); pq.pop();
+            ans+=one.second;
+            ans+=sec.second;
+            if(--one.first) {
+                pq.push({one.first,one.second});
+            }
+            if(--sec.first!=0) {
+                pq.push({sec.first,sec.second});
+            }
+        }
+        if (!pq.empty()) {
+            if (pq.top().first > 1) {
+                return ""; 
+            }
+            if (!ans.empty() && pq.top().second == ans.back()) {
+                return ""; 
+            }
+            ans += pq.top().second;
+        }
+        return ans;
+    }
+};
