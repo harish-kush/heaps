@@ -1,0 +1,23 @@
+class Solution {
+public:
+    typedef pair<int,int> pi; 
+    vector<string> findRelativeRanks(vector<int>& score) {
+        int n = score.size();
+        priority_queue<pi>pq;
+        for(int i=0;i<n;i++){
+            pq.push({score[i],i});
+        }
+        vector<string>ans(n);
+        int place = 1;
+        while(!pq.empty()){
+            int originalIdx = pq.top().second;
+            pq.pop();
+            if(place==1) ans[originalIdx] = "Gold Medal";
+            else if(place==2) ans[originalIdx] = "Silver Medal";
+            else if(place==3) ans[originalIdx] = "Bronze Medal";
+            else ans[originalIdx] = to_string(place);
+            place++;
+        }
+        return ans;
+    }
+};
